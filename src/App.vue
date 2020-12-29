@@ -1,73 +1,50 @@
 <template>
-    <div id="app" :class="{ 'p-list': mode == 'list', 'p-single': mode == 'single' }">
-        <Header></Header>
-        <Breadcrumb
-            name="频道名称"
-            slug="slug"
-            root="/slug"
-            :publishEnable="true"
-            :adminEnable="true"
-            :feedbackEnable="true"
-        >
-            <img slot="logo" svg-inline src="./assets/img/logo.svg" />
-            <Info />
-        </Breadcrumb>
-        <LeftSidebar>
-            <Nav />
-        </LeftSidebar>
-        <Main :withoutRight="false">
-            <single v-if="mode == 'single'" />
-            <div class="m-main" v-else>
-                <tabs />
-                <router-view />
-            </div>
-            <RightSidebar>
-                <Extend />
-            </RightSidebar>
-            <Footer></Footer>
-        </Main>
-    </div>
+  <div id="app">
+    <Header></Header>
+    <Breadcrumb
+        name="剑三小册"
+        slug="collection"
+        root="/collection"
+        :publishEnable="true"
+        :feedbackEnable="true"
+        :adminEnable="false"
+    >
+      <img slot="logo" svg-inline src="./assets/img/logo.svg"/>
+    </Breadcrumb>
+    <LeftSidebar>
+      <Sidebar/>
+    </LeftSidebar>
+    <Main :withoutRight="false">
+      <!-- 路由页面内容 -->
+      <router-view/>
+      <!-- 右侧栏 -->
+      <RightSidebar>
+        <Extend/>
+      </RightSidebar>
+      <Footer></Footer>
+    </Main>
+  </div>
 </template>
 
 <script>
-import Info from "@/components/Info.vue";
-import Nav from "@/components/Nav.vue";
-import Extend from "@/components/Extend.vue";
-import tabs from "@/components/tabs";
-import single from "@/components/single.vue";
-import {getRewrite} from '@jx3box/jx3box-common/js/utils'
+  import Sidebar from "@/components/Sidebar.vue";
+  import Extend from "@/components/Extend.vue";
 
-export default {
+  const lodash = require("lodash");
+
+  export default {
     name: "App",
-    props: [],
-    data: function() {
-        return {};
-    },
-    computed: {
-        mode: function() {
-            return this.$store.state.mode;
-        },
-    },
-    methods: {},
-    beforeCreate: function() {
-        let params = new URLSearchParams(location.search);
-        this.$store.state.pid = params.get("pid") || getRewrite("pid");
-        this.$store.state.mode = this.$store.state.pid ? "single" : "list";
-
-        // 根据情况选择subtype取值
-        // this.$store.state.subtype = getRewrite("subtype");
-        // this.$store.state.subtype = this.$route.params.subtype;
-    },
     components: {
-        Info,
-        Nav,
-        Extend,
-        tabs,
-        single
+      Sidebar,
+      Extend,
     },
-};
+    watch: {
+      $route: {
+        immediate: true,
+        handler() {
+          this.$store.state.sidebar.tag = lodash.get(this.$route, 'params.tag', null);
+        }
+      },
+    }
+  };
 </script>
-
-<style lang="less">
-@import "./assets/css/app.less";
-</style>

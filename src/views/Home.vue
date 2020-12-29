@@ -1,12 +1,12 @@
 <template>
-    <div class="m-single-side">
-        <div id="directory"></div>
+    <div class="v-index">
     </div>
 </template>
 
 <script>
+
 export default {
-    name: "single_side",
+    name: "Home",
     props: [],
     data: function() {
         return {
@@ -15,10 +15,12 @@ export default {
     computed: {
     },
     methods: {
-        
     },
-    filters : {
+    components: {
     },
-    mounted: function() {},
 };
 </script>
+
+<style lang="less">
+// @import "../assets/css/index.less";
+</style>

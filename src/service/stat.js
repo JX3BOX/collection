@@ -1,39 +1,45 @@
-import axios from "axios";
-import { __next } from "@jx3box/jx3box-common/js/jx3box.json";
+import { $next } from "@jx3box/jx3box-common/js/axios";
 
-const stat = __next + "api/summary-any/";
-// const stat = "/api/summary-any/";
-function getStat(type,id) {
-    return axios
-        .get(stat + type + '-' + id + "/stat")
-        .then((res) => {
-            return res.data;
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+function getStat(id) {
+    return $next
+      .get("api/summary-any/" + id + "/stat")
+      .then((res) => {
+          return res.data;
+      })
+      .catch((err) => {
+          console.log(err);
+      });
 }
 
-const actions = __next + "api/summary-any/";
-// const actions = "/api/summary-any/";
-function postStat(type,id) {
-    return axios.get(actions + type + '-' + id, {
+function post_item_stat(id) {
+    if (!id) return null;
+    return $next.get("api/summary-any/" + "item-" + id, {
         params: {
-            type: type,
+            type: "item",
             actions: "views",
         },
     });
 }
-const rank = __next + 'api/summary/visit/rank'
-// const rank = "/api/summary/visit/rank";
-function getRank(type) {
-    return axios.get(rank,{
-        params : {
-            postType : type,
-            postAction : 'views',
-            pageSize : 10
-        }
+
+function post_item_plan_stat(id) {
+    if (!id) return null;
+    return $next.get("api/summary-any/" + "item_plan-" + id, {
+        params: {
+            type: "item_plan",
+            actions: "views",
+        },
     });
 }
 
-export { getStat, postStat, getRank };
+function getRank() {
+    return $next.get("api/summary/visit/rank", {
+        params: {
+            postType: "item",
+            postAction: "views",
+            sort: "7days",
+            pageSize: 15,
+        },
+    });
+}
+
+export { getStat, post_item_stat, post_item_plan_stat, getRank };
