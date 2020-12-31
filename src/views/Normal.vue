@@ -1,6 +1,9 @@
 <template>
   <div class="c-normal">
-    <Collection v-for="(collection,key) in collections" :key="key" :collection="collection"/>
+    <Search/>
+    <div class="c-collections">
+      <CollectionSingle v-for="(collection,key) in collections" :key="key" :collection="collection"/>
+    </div>
     <el-pagination
         background
         :total="collections_total"
@@ -16,7 +19,8 @@
 </template>
 
 <script>
-  import Collection from "../components/Collection";
+  import CollectionSingle from "../components/CollectionSingle";
+  import Search from '../components/Search.vue';
   import {get_collections} from '../service/collection';
 
   export default {
@@ -39,7 +43,8 @@
       },
     },
     components: {
-      Collection,
+      CollectionSingle,
+      Search,
     },
     watch: {
       $route: {
