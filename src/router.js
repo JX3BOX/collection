@@ -11,7 +11,7 @@ const routes = [
     // 主页
     { name: 'home', path: '/home', component: Home },
     // 常规
-    {name: 'normal', path: '/:tag', component: Normal},
+    {name: 'normal', path: '/list/:tag?', component: Normal},
     // 默认页重定向
     {path: '*', redirect: 'home'}
 ];

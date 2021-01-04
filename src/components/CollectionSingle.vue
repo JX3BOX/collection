@@ -1,15 +1,16 @@
 <template>
   <div class="c-collection">
-    <div class="m-image">
+    <router-link class="m-image" :to="{name: 'view', params: {collection_id: collection.id}}">
       <img class="u-image" :src="collection.image">
-    </div>
+    </router-link>
     <div class="m-content">
       <a :href="collection.user_id | author_url" class="m-user">
         <img class="u-avatar" :src="get_thumbnail(collection.user_avatar, 20)">
         <span class="u-nickname" v-text="collection.user_nickname"></span>
       </a>
       <div class="u-updated" v-text="'最后更新于 ' + date_format(collection.updated)"></div>
-      <h3 class="u-title" v-text="collection.title"></h3>
+      <router-link class="u-title" v-text="collection.title"
+                   :to="{name: 'view', params: {collection_id: collection.id}}"></router-link>
       <ul class="u-tags m-list-style">
         <li v-for="(tag, key) in collection.tags" :key="key" v-text="tag" class="u-tag"></li>
       </ul>
@@ -18,8 +19,8 @@
         <i class="el-icon-notebook-2"></i>
         <span class="u-posts-title">小册文章：</span>
         <div class="m-posts">
-          <a :href="post.type === 'custom' ? post.url : get_link(post.type, post.id)"
-             v-for="(post, key) in collection.content" :key="key" v-text="post.title" class="m-post"></a>
+          <a :href="post.type === 'custom' ? post.url : get_link(post.type, post.id)" target="_blank"
+             v-for="(post, key) in collection.posts" :key="key" v-text="post.title" class="m-post"></a>
         </div>
       </div>
     </div>

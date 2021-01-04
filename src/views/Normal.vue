@@ -51,13 +51,14 @@
         immediate: true,
         handler() {
           let tag = this.$route.params.tag;
+          let keyword = this.$route.query.keyword;
           this.page = parseInt(this.$route.query.page);
+          let params = {page: this.page, limit: this.length};
+          if (tag) params.tag = tag;
+          if (keyword) params.keyword = keyword;
+
           // 获取剑三小册列表
-          get_collections({
-            tag: tag,
-            page: this.page,
-            limit: this.length,
-          }).then(
+          get_collections(params).then(
             (data) => {
               data = data.data;
               if (data.code === 200) {
