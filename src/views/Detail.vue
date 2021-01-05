@@ -36,10 +36,20 @@
         </a>
       </div>
     </div>
+
+    <div class="m-comments" v-if="collection && JSON.stringify(collection) !== '{}'">
+      <el-divider content-position="left">
+        <span style="color:#999999">
+          <i class="el-icon-chat-line-square"></i> 讨论
+        </span>
+      </el-divider>
+      <jx3-comment :id="collection.id" category="collection" />
+    </div>
   </div>
 </template>
 
 <script>
+  import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
   import CollectionPublish from '@jx3box/jx3box-editor/service/enum/CollectionPublic';
   import Search from '@/components/Search.vue';
   import {get_collection} from '../service/collection';
@@ -58,6 +68,7 @@
     },
     components: {
       Search,
+      "jx3-comment": Comment,
     },
     methods: {
       date_format,

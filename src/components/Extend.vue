@@ -1,6 +1,6 @@
 <template>
   <div class="c-extend">
-    <RightSideMsg>
+    <RightSideMsg style="margin-top:10px">
       <em>官方反馈交流Q群</em> :
       <strong>
         <a href="https://jq.qq.com/?_wv=1027&k=5S50j08">614370825</a>
