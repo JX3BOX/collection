@@ -1,0 +1,94 @@
+.c-detail {
+}
+
+.m-title {
+  .mb(15px);
+  .pl(5px);
+
+  .u-title, .u-private {
+    .dbi;
+    vertical-align: bottom;
+    margin: 0;
+  }
+
+  .u-title {
+    font-size: 28px;
+  }
+
+  .u-private {
+    .ml(10px);
+    padding: 5px 14px;
+    .br(3px);
+    background-color: #666666;
+    color: #FFFFFF;
+    font-size: 12px;
+  }
+}
+
+.m-description {
+  text-indent: 2em;
+}
+
+.m-post {
+  .db;
+  .mt(10px);
+  padding: 8px 10px;
+  border: 1px solid #6c645c;
+  font-size: 14px;
+  line-height: 24px;
+  color: #333333;
+  .br(4px);
+  transition: background-color .3s ease, border-color .3s ease;
+
+  &:hover {
+    background-color: #fcfbff;
+    border-color: blueviolet;
+  }
+
+  .m-post-user, .m-post-title, .m-post-type, .u-avatar, .u-nickname {
+    .dbi;
+    vertical-align: middle;
+  }
+
+  .m-post-updated, .u-post-custom {
+    .fr;
+  }
+
+  .m-post-user, .m-post-title {
+    &:after {
+      content: '-';
+      .ml(5px);
+      .mr(5px);
+    }
+  }
+
+  .u-avatar {
+    .w(20px);
+    .h(20px);
+    .mr(5px);
+    object-fit: cover;
+    .br(2px);
+  }
+
+  .m-post-title {
+    i {
+      .mr(5px);
+      font-size: 16px;
+    }
+  }
+
+  .m-post-type {
+    color: #AAAAAA;
+    font-size: 12px;
+  }
+
+  .m-post-updated {
+    color: #888888;
+    font-size: 12px;
+  }
+
+  .u-post-custom {
+    color: orangered;
+    font-size: 12px;
+  }
+}

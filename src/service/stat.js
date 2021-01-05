@@ -1,31 +1,10 @@
 import { $next } from "@jx3box/jx3box-common/js/axios";
 
-function getStat(id) {
-    return $next
-      .get("api/summary-any/" + id + "/stat")
-      .then((res) => {
-          return res.data;
-      })
-      .catch((err) => {
-          console.log(err);
-      });
-}
-
-function post_item_stat(id) {
+function post_collection_stat(id) {
     if (!id) return null;
-    return $next.get("api/summary-any/" + "item-" + id, {
+    return $next.get("api/summary-any/" + id, {
         params: {
-            type: "item",
-            actions: "views",
-        },
-    });
-}
-
-function post_item_plan_stat(id) {
-    if (!id) return null;
-    return $next.get("api/summary-any/" + "item_plan-" + id, {
-        params: {
-            type: "item_plan",
+            type: "collection",
             actions: "views",
         },
     });
@@ -34,7 +13,7 @@ function post_item_plan_stat(id) {
 function getRank() {
     return $next.get("api/summary/visit/rank", {
         params: {
-            postType: "item",
+            postType: "collection",
             postAction: "views",
             sort: "7days",
             pageSize: 15,
@@ -42,4 +21,4 @@ function getRank() {
     });
 }
 
-export { getStat, post_item_stat, post_item_plan_stat, getRank };
+export { post_collection_stat, getRank };

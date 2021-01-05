@@ -1,0 +1,58 @@
+.m-hot-items {
+  padding: 10px 15px;
+}
+
+.m-hot-item {
+  display: block;
+  .mb(15px);
+  color: #3d454d;
+
+  .m-image {
+    .w(180px);
+
+    img {
+      .w(100%);
+      .br(4px);
+    }
+  }
+
+  @m-hot-icon-radius: 6px;
+
+  .m-content {
+    & > span {
+      display: block;
+    }
+
+    .u-title {
+      font-size: 14px;
+    }
+
+    .u-excerpt,
+    .u-rank {
+      margin-top: 2px;
+      font-size: 12px;
+    }
+
+    .u-excerpt {
+      opacity: 0.6;
+    }
+
+    .u-rank {
+      color: slateblue;
+      white-space: nowrap;
+
+      i {
+        margin-right: 3px;
+      }
+
+      span {
+        display: inline-block;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  &:hover {
+    background-color: #f5f7fa;
+  }
+}

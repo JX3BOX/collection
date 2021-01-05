@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 // 组件懒加载
 const Home = () => import("./views/Home.vue");
 const Normal = () => import("./views/Normal.vue");
+const Detail = () => import("./views/Detail.vue");
 
 Vue.use(VueRouter);
 
@@ -12,6 +13,8 @@ const routes = [
     { name: 'home', path: '/home', component: Home },
     // 常规
     {name: 'normal', path: '/list/:tag?', component: Normal},
+    // 单页
+    {name: 'view', path: '/view/:collection_id(\\d+)', component: Detail},
     // 默认页重定向
     {path: '*', redirect: 'home'}
 ];

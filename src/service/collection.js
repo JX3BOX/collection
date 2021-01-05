@@ -11,11 +11,12 @@ function get_collection_menus() {
   });
 }
 
-function get_collection($collection_id) {
+function get_collection($collection_id, params = {}) {
   return $http({
     method: "GET",
     url: `${JX3BOX.__helperUrl}api/post/collection/${$collection_id}`,
     headers: {Accept: "application/prs.helper.v2+json"},
+    params: params,
   });
 }
 

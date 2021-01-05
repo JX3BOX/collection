@@ -11,6 +11,8 @@ import "@jx3box/jx3box-common/css/element.css";
 import "@jx3box/jx3box-common/css/normalize.css";
 Vue.use(JX3BOX_UI);
 
+Vue.prototype.$_ = require("lodash");
+
 // 数据与路由
 import router from "./router";
 import store from "./store";
