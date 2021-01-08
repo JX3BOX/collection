@@ -7,7 +7,9 @@ let store = {
     state: {
         sidebar: {
             tag: null,
-        }
+        },
+        my_collections : null,
+        my_collections_total : 0,
     },
     mutations: {},
     getters: {},

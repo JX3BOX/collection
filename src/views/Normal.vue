@@ -1,9 +1,20 @@
 <template>
   <div class="c-normal">
     <Search/>
+
+    <div v-if="JSON.stringify(collections) === '[]'">
+      <el-alert title="暂无剑三小册记录"
+                type="info"
+                center
+                show-icon
+                :closable="false"
+      ></el-alert>
+    </div>
+
     <div class="c-collections">
       <CollectionSingle v-for="(collection,key) in collections" :key="key" :collection="collection"/>
     </div>
+
     <el-pagination
         background
         :total="collections_total"
