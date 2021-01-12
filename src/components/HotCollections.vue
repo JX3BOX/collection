@@ -8,7 +8,7 @@
       <router-link class="m-hot-item" v-for="(item, key) in hot_collections" :key="key"
                    :to="{ name: 'view', params: { collection_id: item.id } }">
         <div class="m-image">
-          <img :src="item.image">
+          <img :src="$options.filters.cover_url(item.image)">
         </div>
         <div class="m-content">
           <div class="u-title">
