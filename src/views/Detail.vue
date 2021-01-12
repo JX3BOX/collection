@@ -1,7 +1,17 @@
 <template>
   <div class="c-detail">
     <Search/>
-    <div class="m-content" v-if="collection">
+
+    <div v-if="JSON.stringify(collection) === '{}'">
+      <el-alert title="该剑三小册不存在或已被删除"
+                type="info"
+                center
+                show-icon
+                :closable="false"
+      ></el-alert>
+    </div>
+
+    <div class="m-content" v-if="collection && JSON.stringify(collection) !== '{}'">
       <div class="m-title">
         <h3 class="u-title" v-text="collection.title"></h3>
         <span class="u-private" v-if="collection.public != publish.PRIVATE">私有</span>
@@ -22,7 +32,8 @@
       <div class="m-posts">
         <a class="m-post" v-for="(post,key) in collection.posts" :key="key" target="_blank"
            :href="post.type === 'custom' ? post.url : get_link(post.type, post.id)">
-          <a class="m-post-user" v-if="post.type !== 'custom' && post.user_id" target="_blank" :href="post.user_id | author_url">
+          <a class="m-post-user" v-if="post.type !== 'custom' && post.user_id" target="_blank"
+             :href="post.user_id | author_url">
             <img class="u-avatar" :src="get_thumbnail(post.user_avatar, 20)">
             <span class="u-nickname" v-text="post.user_nickname"></span>
           </a>
@@ -43,7 +54,7 @@
           <i class="el-icon-chat-line-square"></i> 讨论
         </span>
       </el-divider>
-      <jx3-comment :id="collection.id" category="collection" />
+      <jx3-comment :id="collection.id" category="collection"/>
     </div>
   </div>
 </template>
@@ -55,7 +66,7 @@
   import {get_collection} from '../service/collection';
   import date_format from '../filters/DateFormat';
   import {getThumbnail, getLink, getTypeLabel} from "@jx3box/jx3box-common/js/utils";
-  import { post_collection_stat } from "../service/stat.js";
+  import {post_collection_stat} from "../service/stat.js";
 
   export default {
     name: "Detail",
@@ -87,7 +98,7 @@
             get_collection(this.$route.params.collection_id, {post_extra: 1}).then(
               (res) => {
                 res = res.data;
-                if (res.code === 200) this.collection = res.data.collection;
+                if (res.code === 200) this.collection = res.data.collection ? res.data.collection : {};
               }
             )
           }
