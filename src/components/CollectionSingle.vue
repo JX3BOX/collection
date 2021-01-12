@@ -1,7 +1,7 @@
 <template>
   <div class="c-collection">
     <router-link class="m-image" :to="{name: 'view', params: {collection_id: collection.id}}">
-      <img class="u-image" :src="collection.image">
+      <img class="u-image" :src="$options.filters.cover_url(collection.image)">
     </router-link>
     <div class="m-content">
       <a :href="collection.user_id | author_url" class="m-user">
