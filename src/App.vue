@@ -27,24 +27,24 @@
 </template>
 
 <script>
-  import Sidebar from "@/components/Sidebar.vue";
-  import Extend from "@/components/Extend.vue";
+import Sidebar from "@/components/Sidebar.vue";
+import Extend from "@/components/Extend.vue";
 
-  const lodash = require("lodash");
+const lodash = require("lodash");
 
-  export default {
-    name: "App",
-    components: {
-      Sidebar,
-      Extend,
+export default {
+  name: "App",
+  components: {
+    Sidebar,
+    Extend,
+  },
+  watch: {
+    $route: {
+      immediate: true,
+      handler() {
+        this.$store.state.sidebar.tag = lodash.get(this.$route, 'params.tag', null);
+      }
     },
-    watch: {
-      $route: {
-        immediate: true,
-        handler() {
-          this.$store.state.sidebar.tag = lodash.get(this.$route, 'params.tag', null);
-        }
-      },
-    }
-  };
+  }
+};
 </script>
