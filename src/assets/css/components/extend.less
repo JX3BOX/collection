@@ -1,23 +1,33 @@
 .c-extend {
-  padding: 0 15px;
+    padding: 0 15px;
 
-  .c-sidebar-right-title {
-    .mb(0);
+    .c-sidebar-right-title {
+        .mb(0);
 
-    & > * {
-      vertical-align: middle;
-      line-height: initial;
+        .u-icon {
+            .mr(5px);
+            .dbi;.y;
+            padding: 0 2px;
+            box-sizing: border-box;
+            // .h(auto);
+        }
+
+        & > * {
+            vertical-align: middle;
+            line-height: initial;
+        }
+
+        .el-button {
+            padding: 3px 8px;
+            font-size: 12px;
+        }
     }
 
-    .el-button {
-      padding: 3px 8px;
-      font-size: 12px;
+    .c-sidebar-right-msg {
+        .mt(10px);
+        .ml(0);
+        .mr(0);
     }
-  }
 
-  .c-sidebar-right-msg {
-    .mt(10px);
-    .ml(0);
-    .mr(0);
-  }
 }
+
