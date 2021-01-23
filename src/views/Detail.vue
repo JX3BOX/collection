@@ -16,72 +16,89 @@
             class="m-collection-detail-content"
             v-if="collection && JSON.stringify(collection) !== '{}'"
         >
-            <header class="m-single-header">
-                <!-- 标题 -->
-                <div class="m-single-title">
-                    <a
-                        class="u-title u-sub-block"
-                        :href="url"
-                        :title="collection.title"
-                    >
-                        <img
-                            v-if="!collection.public"
-                            class="u-private"
-                            svg-inline
-                            src="../assets/img/lock.svg"
-                            title="仅自己可见"
-                        />
-                        <span class="u-title-text">{{ collection.title }}</span>
-                    </a>
-                </div>
-
-                <!-- 信息 -->
-                <div class="m-single-info">
-                    <!-- 用户名 -->
-                    <div class="u-author u-sub-block">
-                        <i class="u-author-icon"
-                            ><img svg-inline src="../assets/img/author.svg"
-                        /></i>
+            <div class="m-collection-detail-header">
+                <header class="m-single-header">
+                    <!-- 标题 -->
+                    <div class="m-single-title">
                         <a
-                            class="u-name"
-                            :href="collection.user_id | authorLink"
-                            >{{ collection.user_nickname }}</a
+                            class="u-title u-sub-block"
+                            :href="url"
+                            :title="collection.title"
                         >
+                            <img
+                                v-if="!collection.public"
+                                class="u-private"
+                                svg-inline
+                                src="../assets/img/lock.svg"
+                                title="仅自己可见"
+                            />
+                            <span class="u-title-text">{{
+                                collection.title
+                            }}</span>
+                        </a>
                     </div>
 
-                    <!-- 发布日期 -->
-                    <span class="u-podate u-sub-block" title="发布日期">
-                        <i class="u-icon-podate"
-                            ><img svg-inline src="../assets/img/podate.svg"
-                        /></i>
-                        <time>{{ date_format(collection.created) }}</time>
-                    </span>
+                    <!-- 信息 -->
+                    <div class="m-single-info">
+                        <!-- 用户名 -->
+                        <div class="u-author u-sub-block">
+                            <i class="u-author-icon"
+                                ><img svg-inline src="../assets/img/author.svg"
+                            /></i>
+                            <a
+                                class="u-name"
+                                :href="collection.user_id | authorLink"
+                                >{{ collection.user_nickname }}</a
+                            >
+                        </div>
 
-                    <!-- 最后更新 -->
-                    <span class="u-modate u-sub-block" title="最后更新">
-                        <i class="u-icon-modate"
-                            ><img svg-inline src="../assets/img/modate.svg"
-                        /></i>
-                        <time>{{ date_format(collection.updated) }}</time>
-                    </span>
+                        <!-- 发布日期 -->
+                        <span class="u-podate u-sub-block" title="发布日期">
+                            <i class="u-icon-podate"
+                                ><img svg-inline src="../assets/img/podate.svg"
+                            /></i>
+                            <time>{{ date_format(collection.created) }}</time>
+                        </span>
 
-                    <!-- 查看次数 -->
-                    <span class="u-views u-sub-block">
-                        <i class="el-icon-view"></i>
-                        {{ views }}
-                    </span>
+                        <!-- 最后更新 -->
+                        <span class="u-modate u-sub-block" title="最后更新">
+                            <i class="u-icon-modate"
+                                ><img svg-inline src="../assets/img/modate.svg"
+                            /></i>
+                            <time>{{ date_format(collection.updated) }}</time>
+                        </span>
 
-                    <!-- 编辑 -->
-                    <a
-                        class="u-edit u-sub-block"
-                        :href="edit_link"
-                        v-if="canEdit"
-                    >
-                        <i class="u-icon-edit el-icon-edit-outline"></i>
-                        <span>编辑</span>
-                    </a>
+                        <!-- 查看次数 -->
+                        <span class="u-views u-sub-block">
+                            <i class="el-icon-view"></i>
+                            {{ views }}
+                        </span>
+
+                        <!-- 编辑 -->
+                        <a
+                            class="u-edit u-sub-block"
+                            :href="edit_link"
+                            v-if="canEdit"
+                        >
+                            <i class="u-icon-edit el-icon-edit-outline"></i>
+                            <span>编辑</span>
+                        </a>
+                    </div>
+                </header>
+
+                <div class="m-collection-detail-panel">
+                    <Fav
+                        class="u-fav"
+                        post-type="collection"
+                        :post-id="collection.id"
+                    />
+                    <Like
+                        class="u-like"
+                        post-type="collection"
+                        :post-id="collection.id"
+                    />
                 </div>
-            </header>
+            </div>
 
             <template v-if="collection.description">
                 <el-divider content-position="left">
