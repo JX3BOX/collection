@@ -175,8 +175,8 @@
 
         <div class="m-tags" v-if="collection.tags && collection.tags.length">
             <div class="u-tags-title">
-                <i class="el-icon-price-tag"></i>
-                <span> 标签</span>
+                <i class="el-icon-price-tag"></i> 
+                <span>标签</span>
             </div>
             <ul class="u-tags">
                 <li

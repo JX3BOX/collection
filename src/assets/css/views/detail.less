@@ -2,15 +2,6 @@
     padding: 0 10px;
 }
 
-.u-delete {
-    color:indianred;
-
-    .u-icon-remove {
-        .mr(3px);
-        font-size: 14px;
-    }
-}
-
 .m-title {
     .mt(10px);
     .mb(15px);
@@ -119,8 +110,12 @@
     font-size: 14px;
 
     .u-tags-title {
-        .dbi;
-        vertical-align:top;
+        .dbi;.y(top);
+        .fz(13px,22px);
+
+        i{
+            .mr(4px);
+        }
     }
 }
 
@@ -140,11 +135,14 @@
         background-color: #f2f6fc;
         color: #637a9c;
     }
-
-    @media screen and (max-width:@phone){
-        .u-tag{
-            .mt(8px);
-        }
+}
+@media screen and (max-width:@phone){
+    .u-tags{
+        .db;
+        .ml(0);
+    }
+    .u-tag{
+        .mt(8px);
     }
 }
 
