@@ -40,6 +40,9 @@
 
                     <!-- 信息 -->
                     <div class="m-single-info">
+                        <!-- ID -->
+                        <span class="u-id u-sub-block"><span class="u-id-label">小册ID</span><span class="u-id-value">{{collection.id}}</span></span>
+
                         <!-- 用户名 -->
                         <div class="u-author u-sub-block">
                             <i class="u-author-icon"
