@@ -83,6 +83,17 @@
                             <i class="u-icon-edit el-icon-edit-outline"></i>
                             <span>编辑</span>
                         </a>
+
+                        <!-- 编辑 -->
+                        <a
+                            href="javascript:void(0)"
+                            class="u-delete u-sub-block"
+                            @click="delete_handle($event, collection.id)"
+                            v-if="canEdit"
+                        >
+                            <i class="u-icon-remove el-icon-delete"></i>
+                            <span>删除</span>
+                        </a>
                     </div>
                 </header>
 
@@ -162,6 +173,24 @@
             </template>
         </div>
 
+        <div class="m-tags">
+            <div class="u-tags-title">
+                <i class="el-icon-price-tag"></i>
+                <span> 标签</span>
+            </div>
+            <ul
+                class="u-tags"
+                v-if="collection.tags && collection.tags.length"
+            >
+                <li
+                    v-for="(tag, key) in collection.tags"
+                    :key="key"
+                    v-text="tag"
+                    class="u-tag"
+                ></li>
+            </ul>
+        </div>
+
         <div
             class="m-comments"
             v-if="collection && JSON.stringify(collection) !== '{}'"
@@ -180,7 +209,7 @@
 import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
 import CollectionPublish from "@jx3box/jx3box-editor/service/enum/CollectionPublic";
 import Search from "@/components/Search.vue";
-import { get_collection } from "../service/collection";
+import {get_collection, get_my_collections, remove_collection} from "../service/collection";
 import date_format from "../filters/DateFormat";
 import {
     getThumbnail,
@@ -223,6 +252,28 @@ export default {
                 this.collection.user_id == User.getInfo().uid ||
                 User.getInfo().group > 60
             );
+        },
+        delete_handle($event, collection_id) {
+            $event.preventDefault();
+            this.$confirm("确认是否删除该剑三小册？", "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning",
+            }).then(() => {
+                remove_collection(collection_id).then((data) => {
+                    data = data.data;
+                    if (data.code === 200) {
+                        this.$message.success(data.message);
+                        // 获取我的小册
+                        get_my_collections({ limit: this.limit });
+                        // 返回主页
+                        this.$router.push({name: 'home'})
+                    } else {
+                        this.$message.error(data.message);
+                    }
+                });
+            });
+            return false;
         },
     },
     filters: {
