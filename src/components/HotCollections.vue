@@ -36,31 +36,27 @@
 
 <script>
 import { get_collections } from "../service/collection";
-import { getRank } from "../service/stat";
+import { getStatRank } from "@jx3box/jx3box-common/js/stat";
 
 export default {
     name: "MyCollections",
     data() {
         return {
-            hot_collections: null,
+            hot_collections: [],
         };
     },
     mounted() {
         // 获取热门小册
-        getRank().then((data) => {
-            data = data.data;
-
-            // 整理排名数据
-            let ranks = [],
-                item_ids = [];
-            for (let i in data) {
-                let item_id = this.$_.get(data, `${i}.name`);
-                if (item_id) {
-                    item_ids.push(item_id);
-                    ranks[item_id] = this.$_.get(data, `${i}.value`, {});
+        getStatRank('collection').then((res) => {
+            let list = res.data;
+            let ranks = []
+            let item_ids = []
+            list.forEach((item) => {
+                if(item.name.includes('collection')){
+                    ranks.push(item.value)
+                    item_ids.push(item.name.slice('collection'.length + 1,item.name.length))
                 }
-            }
-            item_ids = item_ids.slice(0, 15);
+            })
 
             // 获取对应小册列表
             get_collections({ ids: item_ids, limit: item_ids.length }).then(

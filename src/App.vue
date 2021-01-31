@@ -2,7 +2,7 @@
     <div id="app">
         <Header></Header>
         <Breadcrumb
-            name="剑三小册"
+            name="文集小册"
             slug="collection"
             root="/collection"
             :publishEnable="true"

@@ -41,7 +41,12 @@
                     <!-- 信息 -->
                     <div class="m-single-info">
                         <!-- ID -->
-                        <span class="u-id u-sub-block"><span class="u-id-label">小册ID</span><span class="u-id-value">{{collection.id}}</span></span>
+                        <span class="u-id u-sub-block"
+                            ><span class="u-id-label">小册ID</span
+                            ><span class="u-id-value">{{
+                                collection.id
+                            }}</span></span
+                        >
 
                         <!-- 用户名 -->
                         <div class="u-author u-sub-block">
@@ -178,7 +183,7 @@
 
         <div class="m-tags" v-if="collection.tags && collection.tags.length">
             <div class="u-tags-title">
-                <i class="el-icon-price-tag"></i> 
+                <i class="el-icon-price-tag"></i>
                 <span>标签</span>
             </div>
             <ul class="u-tags">
@@ -209,7 +214,11 @@
 import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
 import CollectionPublish from "@jx3box/jx3box-editor/service/enum/CollectionPublic";
 import Search from "@/components/Search.vue";
-import {get_collection, get_my_collections, remove_collection} from "../service/collection";
+import {
+    get_collection,
+    get_my_collections,
+    remove_collection,
+} from "../service/collection";
 import date_format from "../filters/DateFormat";
 import {
     getThumbnail,
@@ -219,8 +228,7 @@ import {
     editLink,
 } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user.js";
-import { post_collection_stat } from "../service/stat.js";
-import { getStat } from "@jx3box/jx3box-common/js/stat";
+import { getStat, postStat } from "@jx3box/jx3box-common/js/stat";
 
 export default {
     name: "Detail",
@@ -228,7 +236,7 @@ export default {
     data: function() {
         return {
             publish: CollectionPublish,
-            collection: null,
+            collection: {},
             url: location.href,
             views: 0,
         };
@@ -267,7 +275,7 @@ export default {
                         // 获取我的小册
                         get_my_collections({ limit: this.limit });
                         // 返回主页
-                        this.$router.push({name: 'home'})
+                        this.$router.push({ name: "home" });
                     } else {
                         this.$message.error(data.message);
                     }
@@ -279,12 +287,7 @@ export default {
     filters: {
         authorLink,
     },
-    mounted() {
-        post_collection_stat(this.$route.params.collection_id);
-        getStat("collection", this.$route.params.collection_id).then((res) => {
-            this.views = res.data.views;
-        });
-    },
+    mounted() {},
     watch: {
         "$route.params.collection_id": {
             immediate: true,
@@ -298,6 +301,14 @@ export default {
                             this.collection = res.data.collection
                                 ? res.data.collection
                                 : {};
+                    });
+
+                    postStat("collection", this.$route.params.collection_id);
+                    getStat(
+                        "collection",
+                        this.$route.params.collection_id
+                    ).then((res) => {
+                        this.views = res.data.views;
                     });
                 }
             },
