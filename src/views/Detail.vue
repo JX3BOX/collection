@@ -1,204 +1,223 @@
 <template>
-    <div class="m-collection-detail">
+    <div class="m-collection-detail" v-loading="loading">
         <Search />
 
-        <div v-if="JSON.stringify(collection) === '{}'">
-            <el-alert
-                title="该剑三小册不存在或已被删除"
-                type="info"
-                center
-                show-icon
-                :closable="false"
-            ></el-alert>
-        </div>
+        <el-alert
+            v-if="!collection"
+            title="该剑三小册不存在或已被删除"
+            type="info"
+            center
+            show-icon
+            :closable="false"
+        ></el-alert>
 
-        <div
-            class="m-collection-detail-content"
-            v-if="collection && JSON.stringify(collection) !== '{}'"
-        >
-            <div class="m-collection-detail-header">
-                <header class="m-single-header">
-                    <!-- 标题 -->
-                    <div class="m-single-title">
-                        <a
-                            class="u-title u-sub-block"
-                            :href="url"
-                            :title="collection.title"
-                        >
-                            <img
-                                v-if="!collection.public"
-                                class="u-private"
-                                svg-inline
-                                src="../assets/img/lock.svg"
-                                title="仅自己可见"
-                            />
-                            <span class="u-title-text">{{
-                                collection.title
-                            }}</span>
-                        </a>
-                    </div>
-
-                    <!-- 信息 -->
-                    <div class="m-single-info">
-                        <!-- ID -->
-                        <span class="u-id u-sub-block"
-                            ><span class="u-id-label">小册ID</span
-                            ><span class="u-id-value">{{
-                                collection.id
-                            }}</span></span
-                        >
-
-                        <!-- 用户名 -->
-                        <div class="u-author u-sub-block">
-                            <i class="u-author-icon"
-                                ><img svg-inline src="../assets/img/author.svg"
-                            /></i>
+        <template v-else>
+            <div class="m-collection-detail-content">
+                <div class="m-collection-detail-header">
+                    <header class="m-single-header">
+                        <!-- 标题 -->
+                        <div class="m-single-title">
                             <a
-                                class="u-name"
-                                :href="collection.user_id | authorLink"
-                                >{{ collection.user_nickname }}</a
+                                class="u-title u-sub-block"
+                                :href="url"
+                                :title="collection.title"
                             >
+                                <img
+                                    v-if="!collection.public"
+                                    class="u-private"
+                                    svg-inline
+                                    src="../assets/img/lock.svg"
+                                    title="仅自己可见"
+                                />
+                                <span class="u-title-text">{{
+                                    collection.title
+                                }}</span>
+                            </a>
                         </div>
 
-                        <!-- 发布日期 -->
-                        <span class="u-podate u-sub-block" title="发布日期">
-                            <i class="u-icon-podate"
-                                ><img svg-inline src="../assets/img/podate.svg"
-                            /></i>
-                            <time>{{ date_format(collection.created) }}</time>
-                        </span>
+                        <!-- 信息 -->
+                        <div class="m-single-info">
+                            <!-- ID -->
+                            <span class="u-id u-sub-block"
+                                ><span class="u-id-label">小册ID</span
+                                ><span class="u-id-value">{{
+                                    collection.id
+                                }}</span></span
+                            >
 
-                        <!-- 最后更新 -->
-                        <span class="u-modate u-sub-block" title="最后更新">
-                            <i class="u-icon-modate"
-                                ><img svg-inline src="../assets/img/modate.svg"
-                            /></i>
-                            <time>{{ date_format(collection.updated) }}</time>
-                        </span>
+                            <!-- 用户名 -->
+                            <div class="u-author u-sub-block">
+                                <i class="u-author-icon"
+                                    ><img
+                                        svg-inline
+                                        src="../assets/img/author.svg"
+                                /></i>
+                                <a
+                                    class="u-name"
+                                    :href="collection.user_id | authorLink"
+                                    >{{ collection.user_nickname }}</a
+                                >
+                            </div>
 
-                        <!-- 查看次数 -->
-                        <span class="u-views u-sub-block">
-                            <i class="el-icon-view"></i>
-                            {{ views }}
-                        </span>
+                            <!-- 发布日期 -->
+                            <span class="u-podate u-sub-block" title="发布日期">
+                                <i class="u-icon-podate"
+                                    ><img
+                                        svg-inline
+                                        src="../assets/img/podate.svg"
+                                /></i>
+                                <time>{{
+                                    date_format(collection.created)
+                                }}</time>
+                            </span>
 
-                        <!-- 编辑 -->
-                        <a
-                            class="u-edit u-sub-block"
-                            :href="edit_link"
-                            v-if="canEdit"
-                        >
-                            <i class="u-icon-edit el-icon-edit-outline"></i>
-                            <span>编辑</span>
-                        </a>
+                            <!-- 最后更新 -->
+                            <span class="u-modate u-sub-block" title="最后更新">
+                                <i class="u-icon-modate"
+                                    ><img
+                                        svg-inline
+                                        src="../assets/img/modate.svg"
+                                /></i>
+                                <time>{{
+                                    date_format(collection.updated)
+                                }}</time>
+                            </span>
 
-                        <!-- 编辑 -->
-                        <a
-                            href="javascript:void(0)"
-                            class="u-delete u-sub-block"
-                            @click="delete_handle($event, collection.id)"
-                            v-if="canEdit"
-                        >
-                            <i class="u-icon-remove el-icon-delete"></i>
-                            <span>删除</span>
-                        </a>
+                            <!-- 查看次数 -->
+                            <span class="u-views u-sub-block">
+                                <i class="el-icon-view"></i>
+                                {{ views }}
+                            </span>
+
+                            <!-- 编辑 -->
+                            <a
+                                class="u-edit u-sub-block"
+                                :href="edit_link"
+                                v-if="canEdit"
+                            >
+                                <i class="u-icon-edit el-icon-edit-outline"></i>
+                                <span>编辑</span>
+                            </a>
+
+                            <!-- 编辑 -->
+                            <a
+                                href="javascript:void(0)"
+                                class="u-delete u-sub-block"
+                                @click="delete_handle($event, collection.id)"
+                                v-if="canEdit"
+                            >
+                                <i class="u-icon-remove el-icon-delete"></i>
+                                <span>删除</span>
+                            </a>
+                        </div>
+                    </header>
+
+                    <div class="m-collection-detail-panel">
+                        <Fav
+                            class="u-fav"
+                            post-type="collection"
+                            :post-id="collection.id"
+                        />
+                        <Like
+                            class="u-like"
+                            post-type="collection"
+                            :post-id="collection.id"
+                        />
                     </div>
-                </header>
+                </div>
 
-                <div class="m-collection-detail-panel">
-                    <Fav
-                        class="u-fav"
-                        post-type="collection"
-                        :post-id="collection.id"
-                    />
-                    <Like
-                        class="u-like"
-                        post-type="collection"
-                        :post-id="collection.id"
-                    />
+                <template v-if="collection.description">
+                    <el-divider content-position="left">
+                        <i class="el-icon-collection"></i>
+                        小册简介
+                    </el-divider>
+                    <div class="u-description">
+                        <p v-html="collection.description"></p>
+                    </div>
+                </template>
+
+                <template v-if="collection.posts && collection.posts.length">
+                    <el-divider content-position="left">
+                        <i class="el-icon-folder"></i>
+                        小册文章
+                    </el-divider>
+                    <ul class="u-list">
+                        <li
+                            class="u-item"
+                            v-for="(post, key) in collection.posts"
+                            :key="key"
+                        >
+                            <span class="u-item-order">{{ key + 1 }}. </span>
+                            <span
+                                class="u-item-link"
+                                v-if="post.type === 'custom'"
+                            >
+                                <i class="el-icon-link"></i>站外链接
+                            </span>
+                            <a
+                                class="u-item-author"
+                                v-if="post.type !== 'custom' && post.user_id"
+                                target="_blank"
+                                :href="post.user_id | author_url"
+                            >
+                                <img
+                                    class="u-avatar"
+                                    :src="
+                                        get_thumbnail(
+                                            post.user_avatar,
+                                            20,
+                                            true
+                                        )
+                                    "
+                                />
+                                <span
+                                    class="u-nickname"
+                                    v-text="post.user_nickname"
+                                ></span>
+                                <span class="u-div">/</span>
+                            </a>
+                            <a
+                                class="u-item-title"
+                                target="_blank"
+                                :href="
+                                    post.type === 'custom'
+                                        ? post.url
+                                        : get_link(post.type, post.id)
+                                "
+                            >
+                                {{ post.title }}
+                            </a>
+                            <time
+                                class="u-updated"
+                                v-if="post.updated"
+                                v-text="
+                                    '最后更新于 ' + date_format(post.updated)
+                                "
+                            ></time>
+                        </li>
+                    </ul>
+                </template>
+            </div>
+
+            <div
+                class="m-tags"
+                v-if="collection.tags && collection.tags.length"
+            >
+                <div class="u-tags-title">
+                    <i class="el-icon-price-tag"></i>
+                    <span>标签</span>
                 </div>
             </div>
 
-            <template v-if="collection.description">
+            <div class="m-comments">
                 <el-divider content-position="left">
-                    <i class="el-icon-collection"></i>
-                    小册简介
+                    <span style="color:#999999">
+                        <i class="el-icon-chat-line-square"></i> 讨论
+                    </span>
                 </el-divider>
-                <div class="u-description">
-                    <p v-html="collection.description"></p>
-                </div>
-            </template>
-
-            <template v-if="collection.posts && collection.posts.length">
-                <el-divider content-position="left">
-                    <i class="el-icon-folder"></i>
-                    小册文章
-                </el-divider>
-                <ul class="u-list">
-                    <li
-                        class="u-item"
-                        v-for="(post, key) in collection.posts"
-                        :key="key"
-                    >
-                        <span class="u-item-order">{{ key + 1 }}. </span>
-                        <span class="u-item-link" v-if="post.type === 'custom'">
-                            <i class="el-icon-link"></i>站外链接
-                        </span>
-                        <a
-                            class="u-item-author"
-                            v-if="post.type !== 'custom' && post.user_id"
-                            target="_blank"
-                            :href="post.user_id | author_url"
-                        >
-                            <img
-                                class="u-avatar"
-                                :src="get_thumbnail(post.user_avatar, 20, true)"
-                            />
-                            <span
-                                class="u-nickname"
-                                v-text="post.user_nickname"
-                            ></span>
-                            <span class="u-div">/</span>
-                        </a>
-                        <a
-                            class="u-item-title"
-                            target="_blank"
-                            :href="
-                                post.type === 'custom'
-                                    ? post.url
-                                    : get_link(post.type, post.id)
-                            "
-                        >
-                            {{ post.title }}
-                        </a>
-                        <time
-                            class="u-updated"
-                            v-if="post.updated"
-                            v-text="'最后更新于 ' + date_format(post.updated)"
-                        ></time>
-                    </li>
-                </ul>
-            </template>
-        </div>
-
-        <div class="m-tags" v-if="collection.tags && collection.tags.length">
-            <div class="u-tags-title">
-                <i class="el-icon-price-tag"></i>
-                <span>标签</span>
+                <jx3-comment :id="collection.id" category="collection" />
             </div>
         </template>
-
-        <div
-            class="m-comments"
-            v-if="collection && JSON.stringify(collection) !== '{}'"
-        >
-            <el-divider content-position="left">
-                <span style="color:#999999">
-                    <i class="el-icon-chat-line-square"></i> 讨论
-                </span>
-            </el-divider>
-            <jx3-comment :id="collection.id" category="collection" />
-        </div>
     </div>
 </template>
 
@@ -228,9 +247,10 @@ export default {
     data: function() {
         return {
             publish: CollectionPublish,
-            collection: {},
+            collection: "",
             url: location.href,
             views: 0,
+            loading: false,
         };
     },
     computed: {
@@ -285,15 +305,20 @@ export default {
             immediate: true,
             handler() {
                 if (this.$route.params.collection_id) {
+                    this.loading = true;
                     get_collection(this.$route.params.collection_id, {
                         post_extra: 1,
-                    }).then((res) => {
-                        res = res.data;
-                        if (res.code === 200)
-                            this.collection = res.data.collection
-                                ? res.data.collection
-                                : {};
-                    });
+                    })
+                        .then((res) => {
+                            res = res.data;
+                            if (res.code === 200)
+                                this.collection = res.data.collection
+                                    ? res.data.collection
+                                    : {};
+                        })
+                        .finally(() => {
+                            this.loading = false;
+                        });
 
                     postStat("collection", this.$route.params.collection_id);
                     getStat(
