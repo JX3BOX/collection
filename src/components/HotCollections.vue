@@ -72,7 +72,7 @@ export default {
                             );
                             if (!collections[i]) continue;
                             collections[i].rank = collection_id
-                                ? this.$_.get(ranks, collection_id, null)
+                                ? ranks[i]
                                 : null;
                             output.push(collections[i]);
                         }
