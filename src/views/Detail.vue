@@ -207,6 +207,14 @@
                     <i class="el-icon-price-tag"></i>
                     <span>标签</span>
                 </div>
+                <ul class="u-tags">
+                    <li
+                        v-for="(tag, key) in collection.tags"
+                        :key="key"
+                        v-text="tag"
+                        class="u-tag"
+                    ></li>
+                </ul>
             </div>
 
             <div class="m-comments">
