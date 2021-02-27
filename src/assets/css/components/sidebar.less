@@ -1,37 +1,44 @@
 //父级节点
 .el-tree-node__content {
-  .fz(14px, 28px);
-  .h(28px);
-  user-select: none;
+    .fz(14px, 28px);
+    .h(28px);
+    user-select: none;
 }
 
 .el-tree-node__expand-icon {
-  .none;
+    .none;
 }
 
 //子级节点
 .is-leaf + .el-tree-node__label {
-  &:before {
-    content: "»";
-    color: @color;
-    .mr(5px);
-  }
+    &:before {
+        content: "»";
+        color: @color;
+        .mr(5px);
+    }
 }
 
 .is-current {
-  & > .el-tree-node__content {
-    .bold;
-  }
+    & > .el-tree-node__content {
+        .bold;
+    }
 }
 
 .el-tree-node__label {
-  .w(100%);
-  .pl(10px);
+    .w(100%);
+    .pl(10px);
 
-  .u-count {
-    font-size: 13px;
-    color: #888;
-    margin-left: 5px;
-    font-style: normal;
-  }
+    .u-count {
+        font-size: 13px;
+        color: #888;
+        margin-left: 5px;
+        font-style: normal;
+    }
+}
+
+@media screen and (max-width: @phone) {
+    .c-my-collections,
+    .c-hot-items {
+        .none;
+    }
 }

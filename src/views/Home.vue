@@ -57,7 +57,7 @@ export default {
             collections: [],
             collections_total: 0,
             page: 1,
-            length: 20,
+            length: 10,
         };
     },
     methods: {

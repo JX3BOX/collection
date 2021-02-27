@@ -217,13 +217,13 @@
                 </ul>
             </div>
 
-            <div class="m-comments">
+            <div class="m-comments" v-if="id">
                 <el-divider content-position="left">
                     <span style="color:#999999">
                         <i class="el-icon-chat-line-square"></i> 讨论
                     </span>
                 </el-divider>
-                <jx3-comment :id="collection.id" category="collection" />
+                <jx3-comment :id="id" category="collection" />
             </div>
         </template>
     </div>
@@ -265,6 +265,9 @@ export default {
         edit_link: function() {
             return editLink("collection", this.collection.id);
         },
+        id : function (){
+            return this.collection.id
+        }
     },
     components: {
         Search,
