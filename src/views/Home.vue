@@ -74,7 +74,7 @@ export default {
             handler() {
                 let tag = this.$route.params.tag;
                 let keyword = this.$route.query.keyword;
-                this.page = parseInt(this.$route.query.page);
+                this.page = parseInt(this.$route.query.page) || 1;
                 let params = { page: this.page, limit: this.length };
                 if (tag) params.tag = tag;
                 if (keyword) params.keyword = keyword;
