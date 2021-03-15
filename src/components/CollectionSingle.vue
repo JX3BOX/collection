@@ -86,7 +86,7 @@ import {
     getLink,
     resolveImagePath,
 } from "@jx3box/jx3box-common/js/utils";
-import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "CollectionSingle",
     props: ["collection", "collectionId"],
