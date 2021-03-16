@@ -1,5 +1,5 @@
 <template>
-    <div class="c-my-collections">
+    <div class="c-my-collections" v-if="isLogin">
         <h3 class="c-sidebar-right-title">
             <i class="u-icon u-icon-mycollection"
                 ><img svg-inline src="../assets/img/my.svg"
@@ -71,6 +71,7 @@ export default {
         return {
             user: User.getInfo(),
             limit: 5,
+            isLogin : User.isLogin()
         };
     },
     computed: {
@@ -108,7 +109,7 @@ export default {
     },
     mounted() {
         // 获取我的小册
-        get_my_collections({ limit: this.limit });
+        this.isLogin && get_my_collections({ limit: this.limit });
     },
 };
 </script>
