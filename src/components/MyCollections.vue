@@ -45,7 +45,7 @@
                 </router-link>
                 <a
                     class="u-more"
-                    href="/dashboard/#/other?type=collection"
+                    :href="publish_url(`bucket/collection`)"
                     target="_blank"
                     >查看更多 &raquo;</a
                 >
