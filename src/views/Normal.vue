@@ -1,15 +1,9 @@
 <template>
-    <div class="c-normal">
+    <div class="c-normal" v-loading="loading">
         <Search />
 
         <div v-if="JSON.stringify(collections) === '[]'">
-            <el-alert
-                title="暂无剑三小册记录"
-                type="info"
-                center
-                show-icon
-                :closable="false"
-            ></el-alert>
+            <el-alert title="暂无剑三小册记录" type="info" center show-icon :closable="false"></el-alert>
         </div>
 
         <div class="c-collections">
@@ -41,12 +35,13 @@ import { get_collections } from "../service/collection";
 
 export default {
     name: "Normal",
-    data: function() {
+    data: function () {
         return {
             collections: null,
             collections_total: 0,
             page: 1,
             length: 20,
+            loading: false,
         };
     },
     methods: {
@@ -74,18 +69,23 @@ export default {
                 if (keyword) params.keyword = keyword;
 
                 // 获取剑三小册列表
-                get_collections(params).then(
-                    (data) => {
-                        data = data.data;
-                        if (data.code === 200) {
-                            this.collections = data.data.data;
-                            this.collections_total = data.data.total;
+                this.loading = true;
+                get_collections(params)
+                    .then(
+                        (data) => {
+                            data = data.data;
+                            if (data.code === 200) {
+                                this.collections = data.data.data;
+                                this.collections_total = data.data.total;
+                            }
+                        },
+                        () => {
+                            this.collections = false;
                         }
-                    },
-                    () => {
-                        this.collections = false;
-                    }
-                );
+                    )
+                    .finally(() => {
+                        this.loading = false;
+                    });
             },
         },
     },

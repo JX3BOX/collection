@@ -38,12 +38,12 @@
                         <!-- 信息 -->
                         <div class="m-single-info">
                             <!-- ID -->
-                            <span class="u-id u-sub-block"
+                            <!-- <span class="u-id u-sub-block"
                                 ><span class="u-id-label">小册ID</span
                                 ><span class="u-id-value">{{
                                     collection.id
                                 }}</span></span
-                            >
+                            > -->
 
                             <!-- 用户名 -->
                             <div class="u-author u-sub-block">
@@ -118,8 +118,8 @@
                             post-type="collection"
                             :post-id="collection.id"
                         />
-                        <Like
-                            class="u-like"
+                        <Feed
+                            class="u-feed"
                             post-type="collection"
                             :post-id="collection.id"
                         />
@@ -217,6 +217,8 @@
                 </ul>
             </div>
 
+            <Thx class="m-thx" :postId="id" postType="collection" :userId="author_id" :adminBoxcoinEnable="true" :userBoxcoinEnable="true"/>
+
             <div class="m-comments" v-if="id">
                 <el-divider content-position="left">
                     <span style="color:#999999">
@@ -266,7 +268,10 @@ export default {
             return editLink("collection", this.collection.id);
         },
         id : function (){
-            return this.collection.id
+            return this.collection?.id
+        },
+        author_id : function (){
+            return this.collection?.user_id || 0
         }
     },
     components: {
