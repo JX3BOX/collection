@@ -9,7 +9,7 @@
             :feedbackEnable="true"
             :adminEnable="false"
         >
-            <img slot="logo" svg-inline src="./assets/img/collection.svg" />
+            <img slot="logo" svg-inline :src="getAppIcon('collection')" />
         </Breadcrumb>
         <LeftSidebar>
             <Sidebar />
@@ -29,9 +29,8 @@
 <script>
 import Sidebar from "@/components/Sidebar.vue";
 import Extend from "@/components/Extend.vue";
-
-const lodash = require("lodash");
-
+import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
+import lodash from 'lodash'
 export default {
     name: "App",
     components: {
@@ -50,5 +49,8 @@ export default {
             },
         },
     },
+    methods : {
+        getAppIcon
+    }
 };
 </script>
