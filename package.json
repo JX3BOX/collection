@@ -10,10 +10,10 @@
     "update": "npm install @jx3box/jx3box-common-ui@latest @jx3box/jx3box-common@latest @jx3box/jx3box-editor@latest @jx3box/jx3box-comment-ui@latest"
   },
   "dependencies": {
-    "@jx3box/jx3box-comment-ui": "^1.6.0",
-    "@jx3box/jx3box-common": "^6.7.0",
-    "@jx3box/jx3box-common-ui": "^5.3.1",
-    "@jx3box/jx3box-editor": "^0.8.7",
+    "@jx3box/jx3box-comment-ui": "^1.6.4",
+    "@jx3box/jx3box-common": "^6.7.3",
+    "@jx3box/jx3box-common-ui": "^5.3.4",
+    "@jx3box/jx3box-editor": "^0.9.1",
     "axios": "^0.21.1",
     "core-js": "^3.4.3",
     "element-ui": "^2.13.0",
