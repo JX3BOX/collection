@@ -3,7 +3,8 @@
         <RightSideMsg>
             <em>官方反馈交流Q群</em> :
             <strong>
-                <a href="https://jq.qq.com/?_wv=1027&k=5S50j08">614370825</a>
+                <a href="https://jq.qq.com/?_wv=1027&k=CAiizina" v-if="client == 'origin'">590349918</a>
+                <a href="https://jq.qq.com/?_wv=1027&k=5umZoT3B" v-else>2471800</a>
             </strong>
         </RightSideMsg>
 
@@ -23,6 +24,11 @@ export default {
         MyCollections,
         HotCollections,
     },
+    computed : {
+        client: function () {
+            return this.$store.state.client;
+        },
+    }
 };
 </script>
 

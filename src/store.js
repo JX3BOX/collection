@@ -10,6 +10,7 @@ let store = {
         },
         my_collections : null,
         my_collections_total : 0,
+        client: location.href.includes("origin") ? "origin" : "std",
     },
     mutations: {},
     getters: {},
